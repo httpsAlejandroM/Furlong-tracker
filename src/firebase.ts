@@ -6,13 +6,13 @@ import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,//"AIzaSyC6Flcf_xfWJSRmIDoM-jdEMssQBvV2F4Q",
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,//"furlong-3ffb2.firebaseapp.com",
-  databaseURL: import.meta.env.VITE_DB_URL,//"https://furlong-3ffb2-default-rtdb.firebaseio.com",
-  projectId: import.meta.env.VITE_PROJECT_ID,//"furlong-3ffb2",
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET, //"furlong-3ffb2.appspot.com",
-  messagingSenderId: import.meta.env.VITE_SENDER_ID,//"276073528527",
-  appId: import.meta.env.VITE_APP_ID//"1:276073528527:web:e926445bab5d15e5574bba"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_DB_URL,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET, 
+  messagingSenderId: import.meta.env.VITE_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID
 };
 
 // Initialize Firebase
