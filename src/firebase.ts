@@ -6,7 +6,7 @@ const AUTH_DOMAIN = import.meta.env.AUTH_DOMAIN
 const DB_URL = import.meta.env.DB_URL
 const PROJECT_ID = import.meta.env.PROJECT_ID
 const STORAGE_BUCKET = import.meta.env.STORAGE_BUCKET
-const MESSAGING_SENDER_ID = import.meta.env.STORAGE_BUCKET
+const MESSAGING_SENDER_ID = import.meta.env.MESSAGING_SENDER_ID
 const APP_ID = import.meta.env.APP_ID
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
