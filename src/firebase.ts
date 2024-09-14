@@ -10,9 +10,9 @@ const firebaseConfig = {
   authDomain: "furlong-3ffb2.firebaseapp.com",
   databaseURL: "https://furlong-3ffb2-default-rtdb.firebaseio.com",
   projectId: import.meta.env.VITE_PROJECT_ID,//"furlong-3ffb2",
-  storageBucket:"furlong-3ffb2.appspot.com",
-  messagingSenderId:"276073528527",
-  appId: "1:276073528527:web:e926445bab5d15e5574bba"
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET, //"furlong-3ffb2.appspot.com",
+  messagingSenderId: import.meta.env.VITE_SENDER_ID,//"276073528527",
+  appId: import.meta.env.VITE_APP_ID//"1:276073528527:web:e926445bab5d15e5574bba"
 };
 
 // Initialize Firebase
