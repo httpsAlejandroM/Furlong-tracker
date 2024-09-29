@@ -1,26 +1,22 @@
-import { Dispatch, useRef, useState } from "react"
-import { Form } from "react-bootstrap"
-import { carrilesType } from "./Carril"
+import { Dispatch, useState } from "react";
+import { Form } from "react-bootstrap";
+import { carrilesType } from "./Carril";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../../firebase";
 
 interface props {
+    carrilNumber: number
     nroEquipo: number | null
     carrilStatus: carrilesType
-    setNroEquipo: Dispatch<number | null>
     setCarrilStatus: Dispatch<carrilesType>
+    setNroEquipo: Dispatch<number | null>
     closeDialog: VoidFunction
-    carrilNumber: number
 }
 
-function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber, setNroEquipo, nroEquipo }: props) {
+function StatusTab({ carrilNumber, carrilStatus, nroEquipo, setCarrilStatus, setNroEquipo, closeDialog}: props) {
 
     const [tempStatus, setTempStatus] = useState<carrilesType>(carrilStatus);
     const [tempNroEquipo, setTempNroEquipo] = useState<number | null>(nroEquipo);
-
-    const vacioRef = useRef(null)
-    const inProcessRef = useRef(null)
-    const completeRef = useRef(null)
 
     const onTempChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newStatus = event.target.value as carrilesType
@@ -30,7 +26,6 @@ function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber,
         }
     }
 
-
     const saveChanges = async () => {
         const carrilRef = doc(db, "carriles", `${carrilNumber}`);
         await setDoc(carrilRef, {
@@ -38,28 +33,18 @@ function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber,
             nroEquipo: tempNroEquipo,
         });
 
-
         setCarrilStatus(tempStatus)
         setNroEquipo(tempNroEquipo)
         closeDialog()
     }
 
-    const isSaveButtonDisabled = () => {
-        return (tempStatus === "En proceso" || tempStatus === "Lista") && !tempNroEquipo;
-    };
-
+    const isSaveButtonDisabled = () =>  (tempStatus === "En proceso" || tempStatus === "Lista") && !tempNroEquipo;
 
     return (
         <>
-            <div className="d-flex flex-row justify-content-between align-items-center">
-                <span className="">Estado del carril/carga</span>
-                <button onClick={closeDialog} type="button" className="btn-close"></button>
-            </div>
-            <hr className="border-dark my-2" />
             <Form >
                 <div className="mb-3">
                     <Form.Check
-                        ref={vacioRef}
                         inline
                         label="Vacío"
                         //name={` ${carrilNumber}`}
@@ -71,7 +56,6 @@ function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber,
                     />
 
                     <Form.Check
-                        ref={inProcessRef}
                         inline
                         label="En proceso"
                         //name={`${carrilNumber}`}
@@ -82,7 +66,6 @@ function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber,
                         onChange={onTempChangeHandler}
                     />
                     <Form.Check
-                        ref={completeRef}
                         inline
                         label="Lista"
                         //name={`${carrilNumber}`}
@@ -109,13 +92,10 @@ function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber,
                     }}
                 />
                 <hr className="border-dark my-2" />
-                <button className="btn btn-primary" onClick={saveChanges} disabled={isSaveButtonDisabled()}>Guardiar cambios</button>
             </div>
-
-
+            <button className="btn btn-primary" onClick={saveChanges} disabled={isSaveButtonDisabled()}>Guardiar cambios</button>
 
         </>
-
     )
 }
-export default StatusModal
+export default StatusTab

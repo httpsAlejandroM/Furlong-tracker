@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect  } from "react"
 import StatusModal from "./StatusModal";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../../firebase";
 
 interface carrilInterface {
     carrilNumber: number
@@ -48,7 +48,7 @@ function Carril({ carrilNumber }: carrilInterface) {
     },[carrilNumber])
 
     return (
-        <article key={carrilNumber} className="text-light container-fluid d-flex align-items-center justify-content-start input-group mb-2">
+        <article key={carrilNumber} className="postion-relative text-light container-fluid d-flex justify-content-start input-group mb-2">
             <span className="input-group-text d-flex justify-content-center fs-5" style={{ width: "43px" }}>{carrilNumber}</span>
             <button
                 type="button"
@@ -62,7 +62,7 @@ function Carril({ carrilNumber }: carrilInterface) {
                 <span className="input-group-text d-flex justify-content-center fs-5 rounded-2 rounded-start-0"
                     style={{ width: "70px" }}>{nroEquipo}</span>
             }
-            <dialog className="translate-middle start-50 end-50 border-0 rounded-3 w-100" ref={dialogRef}>
+            <dialog style={{top:"19%"}} className="position-fixed mx-auto border-0 rounded-3 col-12 col-lg-6 offset-lg-3 m-0" ref={dialogRef}>
                 <StatusModal 
                 closeDialog={closeDialog} 
                 carrilStatus={carrilStatus} 

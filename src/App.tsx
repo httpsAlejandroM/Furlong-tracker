@@ -1,21 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Carril from './components/Carril';
+import { Route, Routes } from 'react-router-dom';
+import DespachoList from './views/carriles despacho/DespachoList';
+import Navbar from "../src/components/header/Navbar"
+import Searcher from './views/searcher/Searcher';
 
 function App() {
 
-  const carriles = Array.from({length: 22}, (_, index)=> index + 1);
-
   return (
-    <main className='container-fluid'>
-      <h1 className='text-white display-3 m-2 mb-3'>Lista de Cargas</h1>
-      {
-        carriles.map((carril)=>{
-          return (
-            <Carril key={carril} carrilNumber={carril}></Carril>
-          )
-        })
-      }
-    </main>
+    <>
+    <Navbar/>
+      <Routes>
+        <Route path='/' element={<DespachoList/>}/>
+        <Route path="/searcher" element={<Searcher/>}/>
+      </Routes>
+    </>
   )
 }
 
