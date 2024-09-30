@@ -1,7 +1,7 @@
 import { Dispatch, useState } from "react";
 import { Form } from "react-bootstrap";
 import { carrilesType } from "./Carril";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 
 interface props {
@@ -13,7 +13,7 @@ interface props {
     closeDialog: VoidFunction
 }
 
-function StatusTab({ carrilNumber, carrilStatus, nroEquipo, setCarrilStatus, setNroEquipo, closeDialog}: props) {
+function StatusTab({ carrilNumber, carrilStatus, nroEquipo, setCarrilStatus, setNroEquipo, closeDialog }: props) {
 
     const [tempStatus, setTempStatus] = useState<carrilesType>(carrilStatus);
     const [tempNroEquipo, setTempNroEquipo] = useState<number | null>(nroEquipo);
@@ -28,17 +28,25 @@ function StatusTab({ carrilNumber, carrilStatus, nroEquipo, setCarrilStatus, set
 
     const saveChanges = async () => {
         const carrilRef = doc(db, "carriles", `${carrilNumber}`);
-        await setDoc(carrilRef, {
-            status: tempStatus,
-            nroEquipo: tempNroEquipo
-        }, {merge: true});
+        const carrilSnap = await getDoc(carrilRef);
+
+        if (carrilSnap.exists()) {
+            const data = carrilSnap.data()
+            const detailLane = data?.detailLane ? data.detailLane : [];
+
+            await setDoc(carrilRef, {
+                status: tempStatus,
+                nroEquipo: tempNroEquipo,
+                detailLane: tempStatus === "Vacío" ? [] : detailLane
+            }, { merge: true });
+        }
 
         setCarrilStatus(tempStatus)
         setNroEquipo(tempNroEquipo)
         closeDialog()
     }
 
-    const isSaveButtonDisabled = () =>  (tempStatus === "En proceso" || tempStatus === "Lista") && !tempNroEquipo;
+    const isSaveButtonDisabled = () => (tempStatus === "En proceso" || tempStatus === "Lista") && !tempNroEquipo;
 
     return (
         <>

@@ -35,15 +35,15 @@ function StatusModal({ closeDialog, carrilStatus, setCarrilStatus, carrilNumber,
     return (
         <div className="d-flex flex-column">
     
-            <div className="d-flex flex-row justify-content-between ">
+            <div className="d-flex flex-row justify-content-between mb-3">
                 <div className="border-bottom py-1 border-secondary-subtle border-2 col">
                 <span 
-                
+                style={{cursor:"pointer"}}
                 className={`${currentTab === "statusTab"? activeTab : "" } p-2`} 
                 onClick={()=>setCurrentTab("statusTab")}
                 >Estado del carril</span>
                 <span 
-                
+                style={{cursor:"pointer"}}
                 className={`${currentTab === "detailTab"? activeTab : ""} p-2`} 
                 onClick={()=>setCurrentTab("detailTab")}>Destalles de carga</span>
                 </div>
