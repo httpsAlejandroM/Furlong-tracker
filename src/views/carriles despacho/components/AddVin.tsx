@@ -6,6 +6,8 @@ import { detailLaneType } from "../../../interfaces/detailLane.interface";
 import { pushVin } from "../../../utils/detailLaneArray";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface props {
     detailLane: detailLaneType
@@ -28,11 +30,27 @@ function AddVin({ setDetailLane, detailLane, carrilNumber }: props) {
         setIsLoading(true)
         try {
             const data = (await axios.get(`${ApiUrl}/inventario/${addInputValue}`)).data
-            const addedVin = pushVin(detailLane, data)
-            setDetailLane([...addedVin])
-            setAddInputValue("")
-            saveDetails()
-            setIsLoading(false)
+            if(!data.message){
+                const addedVin = pushVin(detailLane, data)
+                setDetailLane([...addedVin])
+                setAddInputValue("")
+                saveDetails()
+                setIsLoading(false)
+            } else {
+                toast.info(`No existe VIN ${addInputValue}`, {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                    });
+                setAddInputValue("")
+                setIsLoading(false)
+            }
         } catch (error) {
             console.log(error);
         }
@@ -55,7 +73,22 @@ function AddVin({ setDetailLane, detailLane, carrilNumber }: props) {
     }
 
     return (
+
+        <>
+        <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+        theme="light"
+        />
         <Form className="d-flex justify-content-between align-items-center mt-4 mb-2 col-12" onSubmit={handleSubmit} >
+            
             <Form.Control
                 type="search"
                 placeholder="VIN"
@@ -73,6 +106,7 @@ function AddVin({ setDetailLane, detailLane, carrilNumber }: props) {
                 {isLoading ? <Spinner animation="border" variant="light" size="sm" /> : "Agregar"}
             </Button>
         </Form>
+        </>
     )
 }
 export default AddVin
