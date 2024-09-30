@@ -30,8 +30,8 @@ function StatusTab({ carrilNumber, carrilStatus, nroEquipo, setCarrilStatus, set
         const carrilRef = doc(db, "carriles", `${carrilNumber}`);
         await setDoc(carrilRef, {
             status: tempStatus,
-            nroEquipo: tempNroEquipo,
-        });
+            nroEquipo: tempNroEquipo
+        }, {merge: true});
 
         setCarrilStatus(tempStatus)
         setNroEquipo(tempNroEquipo)

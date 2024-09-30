@@ -18,7 +18,9 @@ function DetailTab({ carrilNumber }: props) {
     const unsubscribe = onSnapshot(carrilRef, (doc) => {
       if (doc.exists()) {
         const data = doc.data();
-        setDetailLane(data.detailLane)
+        if(Array.isArray(data.detailLane) && data.detailLane.length >= 1){
+          setDetailLane(data.detailLane)
+        }
       }
     })
 
