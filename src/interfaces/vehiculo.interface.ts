@@ -8,6 +8,7 @@ interface vehiculoInterfaces {
     serie: string
     turno: string
     message?: string
+    check?: boolean
 }
 
 

@@ -32,7 +32,7 @@ function DetailTab({ carrilNumber }: props) {
       {
         detailLane.length === 0
           ? <p className="text-center p-0 mt-3">No hay detalles de la carga</p>
-          : <DetailTabContainer detailsLane={detailLane} />
+          : <DetailTabContainer detailsLane={detailLane} setDetailLane={setDetailLane} carrilNumber={carrilNumber}/>
       }
       <AddVin detailLane={detailLane} setDetailLane={setDetailLane} carrilNumber={carrilNumber} />
     </div>
