@@ -49,11 +49,11 @@ function CheckBtn({ carrilNumber, vinId, detailsLane }: props) {
 
     return (
         <div>
-            <input type="checkbox" className="btn-check" id="btn-check" autoComplete="off" />
+            <input type="checkbox" className="btn-check" id={`btn-check ${vinId}`} autoComplete="off" />
             <label
                 onClick={() => checkHandler()} 
                 className={isChecked ? "btn btn-sm btn-success" : "btn btn-sm btn-warning"}
-                htmlFor="btn-check">{
+                htmlFor={`btn-check ${vinId}`}>{
                     isChecked
                         ? <i className="bi bi-check-lg"></i>
                         : <i className="bi bi-clock"></i>}
